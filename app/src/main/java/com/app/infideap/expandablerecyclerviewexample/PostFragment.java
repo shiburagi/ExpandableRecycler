@@ -23,7 +23,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class ExpandableFragment extends Fragment {
+public class PostFragment extends Fragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -35,13 +35,13 @@ public class ExpandableFragment extends Fragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ExpandableFragment() {
+    public PostFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static ExpandableFragment newInstance(int columnCount) {
-        ExpandableFragment fragment = new ExpandableFragment();
+    public static PostFragment newInstance(int columnCount) {
+        PostFragment fragment = new PostFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);

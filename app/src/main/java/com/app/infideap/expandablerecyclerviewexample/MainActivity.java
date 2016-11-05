@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity implements
-    ExpandableFragment.OnListFragmentInteractionListener{
+    PostFragment.OnListFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.activity_main, ExpandableFragment.newInstance(1))
+                .replace(R.id.activity_main, PostFragment.newInstance(1))
                 .commit();
     }
 

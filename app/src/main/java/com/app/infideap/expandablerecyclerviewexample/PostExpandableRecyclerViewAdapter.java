@@ -8,7 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.app.infideap.expandablerecyclerviewexample.ExpandableFragment.OnListFragmentInteractionListener;
+import com.app.infideap.expandablerecyclerview.ExpandableRecycler;
+import com.app.infideap.expandablerecyclerviewexample.PostFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
 
@@ -38,6 +39,8 @@ public class PostExpandableRecyclerViewAdapter extends ExpandableRecycler.Adapte
     public PostExpandableRecyclerViewAdapter(List<Post> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
+
+        setToggleDrawable(null);
     }
 
     @Override
@@ -102,6 +105,7 @@ public class PostExpandableRecyclerViewAdapter extends ExpandableRecycler.Adapte
             childView.findViewById(R.id.bookmark).setBackgroundColor(colors[childPosition % colors.length]);
             return childView;
         }
+
 
         @Override
         public String toString() {

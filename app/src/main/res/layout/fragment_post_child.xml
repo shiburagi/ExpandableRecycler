@@ -19,7 +19,7 @@
             android:id="@+id/bookmark"
             android:layout_width="5dp"
             android:layout_height="match_parent"
-            android:background="@color/colorAccent" />
+            android:background="@color/colorLine" />
 
         <android.support.v4.widget.Space
             android:layout_width="10dp"

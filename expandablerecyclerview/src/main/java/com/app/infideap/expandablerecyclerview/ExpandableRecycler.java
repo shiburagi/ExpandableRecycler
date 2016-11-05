@@ -1,7 +1,9 @@
-package com.app.infideap.expandablerecyclerviewexample;
+package com.app.infideap.expandablerecyclerview;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -12,15 +14,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.app.infideap.expandablerecyclerviewexample.ExpandableFragment.OnListFragmentInteractionListener;
 import com.github.aakira.expandablelayout.ExpandableLayoutListenerAdapter;
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.github.aakira.expandablelayout.Utils;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link Post} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
  */
 public class ExpandableRecycler extends RecyclerView {
 
@@ -39,12 +37,23 @@ public class ExpandableRecycler extends RecyclerView {
     public abstract static class Adapter<T extends ViewHolder> extends RecyclerView.Adapter<T> {
 
 
+        private Drawable drawable;
+        private int dividerColor = Color.parseColor("#7f8c8d");
+
         @Override
         public abstract T onCreateViewHolder(ViewGroup parent, int viewType);
 
         @Override
-        public void onBindViewHolder(T holder, int position){
-            holder.load(getChildCount(position));
+        public void onBindViewHolder(T holder, int position) {
+            holder.load(getChildCount(position), drawable, dividerColor);
+        }
+
+        protected void setToggleDrawable(Drawable drawable) {
+            this.drawable = drawable;
+        }
+
+        protected void setDividerColor(int color) {
+            this.dividerColor = color;
         }
 
         public abstract int getChildCount(int position);
@@ -58,16 +67,21 @@ public class ExpandableRecycler extends RecyclerView {
         private final FrameLayout parentView;
         private final Context context;
         private final LinearLayout childView;
+        private final View line1View;
+        private final View line2View;
 
         public ViewHolder(Context context, ViewGroup parent) {
             super(LayoutInflater.from(context).inflate(R.layout.fragment_expandable, parent, false));
 
             this.context = context;
+
             parentView = (FrameLayout) itemView.findViewById(R.id.content_parent);
             childView = (LinearLayout) itemView.findViewById(R.id.content_child);
             expendableView = (ExpandableLinearLayout) itemView.findViewById(R.id.view_expendable);
             toggleView = (ImageView) itemView.findViewById(R.id.imageView_toggle);
 
+            line1View = itemView.findViewById(R.id.line1);
+            line2View = itemView.findViewById(R.id.line2);
             expendableView.setListener(new ExpandableLayoutListenerAdapter() {
                 @Override
                 public void onPreOpen() {
@@ -96,7 +110,36 @@ public class ExpandableRecycler extends RecyclerView {
 
         }
 
-        public void load(int childCount) {
+
+        public void toggle() {
+            expendableView.toggle();
+        }
+
+
+        public void collapse() {
+            expendableView.collapse();
+        }
+
+
+        public void expand() {
+            expendableView.expand();
+        }
+
+
+        public boolean isExpanded() {
+            return expendableView.isExpanded();
+        }
+
+        void load(int childCount, Drawable drawable, int dividerColor) {
+            if (drawable == null)
+                toggleView.setVisibility(GONE);
+            else {
+                toggleView.setVisibility(VISIBLE);
+                toggleView.setImageDrawable(drawable);
+            }
+            line1View.setBackgroundColor(dividerColor);
+            line2View.setBackgroundColor(dividerColor);
+
             parentView.removeAllViews();
             parentView.addView(getView(context, parentView));
             childView.removeAllViews();
@@ -109,7 +152,6 @@ public class ExpandableRecycler extends RecyclerView {
 
         public abstract View getChildView(Context context, ViewGroup parent, int childPosition);
     }
-
 
 
     /**

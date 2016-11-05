@@ -39,9 +39,10 @@
     </RelativeLayout>
 
     <View
+        android:id="@+id/line1"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/colorAccent" />
+        android:background="@color/colorLine" />
 
     <com.github.aakira.expandablelayout.ExpandableLinearLayout
         android:id="@+id/view_expendable"
@@ -61,7 +62,8 @@
     </com.github.aakira.expandablelayout.ExpandableLinearLayout>
 
     <View
+        android:id="@+id/line2"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/colorAccent" />
+        android:background="@color/colorLine" />
 </LinearLayout>
