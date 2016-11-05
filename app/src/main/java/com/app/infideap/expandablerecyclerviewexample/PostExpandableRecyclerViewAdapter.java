@@ -40,7 +40,8 @@ public class PostExpandableRecyclerViewAdapter extends ExpandableRecycler.Adapte
         mValues = items;
         mListener = listener;
 
-        setToggleDrawable(null);
+
+
     }
 
     @Override

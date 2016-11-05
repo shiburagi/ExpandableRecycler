@@ -3,6 +3,7 @@ package com.app.infideap.expandablerecyclerviewexample;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -77,7 +78,18 @@ public class PostFragment extends Fragment {
                 List<Post> posts =
                         Arrays.asList(gson.fromJson(readFromAsset("data/post.json"), Post[].class));
 
-                recyclerView.setAdapter(new PostExpandableRecyclerViewAdapter(posts, mListener));
+                PostExpandableRecyclerViewAdapter adapter
+                        = new PostExpandableRecyclerViewAdapter(posts, mListener);
+
+//               adapter.setToggleDrawable(null); // set custom icon for toggle
+               adapter.setShowToggle(false); // hide or show toggle
+
+                // set divider color
+                adapter.setDividerColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+
+                //set divider color none
+//                adapter.setDividerColor(0);
+                recyclerView.setAdapter(adapter);
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -39,20 +40,25 @@ public class ExpandableRecycler extends RecyclerView {
 
         private Drawable drawable;
         private int dividerColor = Color.parseColor("#7f8c8d");
+        private boolean showToggle = true;
 
         @Override
         public abstract T onCreateViewHolder(ViewGroup parent, int viewType);
 
         @Override
         public void onBindViewHolder(T holder, int position) {
-            holder.load(getChildCount(position), drawable, dividerColor);
+            holder.load(getChildCount(position), drawable, dividerColor, showToggle);
         }
 
-        protected void setToggleDrawable(Drawable drawable) {
+        public void setToggleDrawable(Drawable drawable) {
             this.drawable = drawable;
         }
 
-        protected void setDividerColor(int color) {
+        public void setShowToggle(boolean show) {
+            showToggle = show;
+        }
+
+        public void setDividerColor(int color) {
             this.dividerColor = color;
         }
 
@@ -130,10 +136,13 @@ public class ExpandableRecycler extends RecyclerView {
             return expendableView.isExpanded();
         }
 
-        void load(int childCount, Drawable drawable, int dividerColor) {
-            if (drawable == null)
+        void load(int childCount, Drawable drawable, int dividerColor, boolean showToggle) {
+            if (!showToggle)
                 toggleView.setVisibility(GONE);
             else {
+                if (drawable == null) {
+                    drawable = ContextCompat.getDrawable(context, R.drawable.ic_expand_more_gray_24dp);
+                }
                 toggleView.setVisibility(VISIBLE);
                 toggleView.setImageDrawable(drawable);
             }
