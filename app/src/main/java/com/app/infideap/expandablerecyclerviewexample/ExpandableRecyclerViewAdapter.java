@@ -62,7 +62,7 @@ public class ExpandableRecyclerViewAdapter extends RecyclerView.Adapter<Expandab
             @Override
             public void onClick(View view) {
                 holder.childView.toggle();
-//                mListener.onListFragmentInteraction(holder.mView);
+//                mListener.onListFragmentInteraction(holder.view);
             }
         });
 
@@ -87,14 +87,17 @@ public class ExpandableRecyclerViewAdapter extends RecyclerView.Adapter<Expandab
 //        holder.childView.collapse();
     }
 
-    /**
-     * For toggle rotation animation
-     *
-     * @param target
-     * @param from
-     * @param to
-     * @return
-     */
+    public void getChildView(final ViewHolder holder, final int position) {
+    }
+
+        /**
+         * For toggle rotation animation
+         *
+         * @param target
+         * @param from
+         * @param to
+         * @return
+         */
     public ObjectAnimator createRotateAnimator(final View target, final float from, final float to) {
         ObjectAnimator animator = ObjectAnimator.ofFloat(target, "rotation", from, to);
         animator.setDuration(300);
@@ -124,7 +127,7 @@ public class ExpandableRecyclerViewAdapter extends RecyclerView.Adapter<Expandab
             postView = (TextView) view.findViewById(R.id.textView_post);
 
             parentView = view.findViewById(R.id.view_parent);
-            childView = (ExpandableLinearLayout) view.findViewById(R.id.view_child);
+            childView = (ExpandableLinearLayout) view.findViewById(R.id.view_expendable);
             toggleView = (ImageView) view.findViewById(R.id.imageView_toggle);
 
         }

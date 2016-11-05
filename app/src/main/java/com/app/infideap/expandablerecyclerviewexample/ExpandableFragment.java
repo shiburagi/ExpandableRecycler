@@ -77,7 +77,7 @@ public class ExpandableFragment extends Fragment {
                 List<Post> posts =
                         Arrays.asList(gson.fromJson(readFromAsset("data/post.json"), Post[].class));
 
-                recyclerView.setAdapter(new ExpandableRecyclerViewAdapter(posts, mListener));
+                recyclerView.setAdapter(new PostExpandableRecyclerViewAdapter(posts, mListener));
             } catch (IOException e) {
                 e.printStackTrace();
             }
