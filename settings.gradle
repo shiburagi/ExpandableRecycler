@@ -1,1 +1,2 @@
-include ':app', ':expandablerecyclerview'
+include ':app', ':expandable-recyclerview'
+project(':expandable-recyclerview').projectDir = new File('expandablerecyclerview')

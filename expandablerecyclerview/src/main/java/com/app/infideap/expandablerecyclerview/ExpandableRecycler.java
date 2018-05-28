@@ -41,13 +41,18 @@ public class ExpandableRecycler extends RecyclerView {
         private Drawable drawable;
         private int dividerColor = Color.parseColor("#7f8c8d");
         private boolean showToggle = true;
+        private ToggleListener listener;
 
         @Override
         public abstract T onCreateViewHolder(ViewGroup parent, int viewType);
 
         @Override
         public void onBindViewHolder(T holder, int position) {
+
             holder.load(getChildCount(position), drawable, dividerColor, showToggle);
+            holder.setToggleListener(listener);
+            holder.setIsRecyclable(false);
+            holder.expendableView.setInRecyclerView(true);
         }
 
         public void setToggleDrawable(Drawable drawable) {
@@ -63,20 +68,28 @@ public class ExpandableRecycler extends RecyclerView {
         }
 
         public abstract int getChildCount(int position);
+
+        public void setToggleListener(ToggleListener listener) {
+            this.listener = listener;
+            notifyItemRangeChanged(0, getItemCount());
+        }
     }
 
 
     public abstract static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final ExpandableLinearLayout expendableView;
+        final ExpandableLinearLayout expendableView;
         private final ImageView toggleView;
         private final FrameLayout parentView;
         private final Context context;
         private final LinearLayout childView;
         private final View line1View;
         private final View line2View;
+        private ToggleListener listener;
 
-        public ViewHolder(Context context, ViewGroup parent) {
+        private Boolean isExpand = null;
+
+        public ViewHolder(Context context, final ViewGroup parent) {
             super(LayoutInflater.from(context).inflate(R.layout.fragment_expandable, parent, false));
 
             this.context = context;
@@ -98,37 +111,49 @@ public class ExpandableRecycler extends RecyclerView {
                 public void onPreClose() {
                     createRotateAnimator(toggleView, 180f, 0f).start();
                 }
+
+                @Override
+                public void onOpened() {
+                    if (listener != null) listener.onExpand(getAdapterPosition());
+                }
+
+                @Override
+                public void onClosed() {
+                    if (listener != null) listener.onCollapse(getAdapterPosition());
+                }
             });
             parentView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     expendableView.toggle();
-//                mListener.onListFragmentInteraction(view);
                 }
             });
 
-            expendableView.post(new Runnable() {
-                @Override
-                public void run() {
-                    expendableView.collapse();
-                }
-            });
 
         }
 
 
         public void toggle() {
-            expendableView.toggle();
+            if (isExpand != null)
+                expendableView.toggle();
+            isExpand = !expendableView.isExpanded();
+
         }
 
 
         public void collapse() {
-            expendableView.collapse();
+            if (isExpand != null)
+                expendableView.collapse();
+            isExpand = false;
+
         }
 
 
         public void expand() {
-            expendableView.expand();
+            if (isExpand != null)
+                expendableView.expand();
+            isExpand = true;
+
         }
 
 
@@ -155,11 +180,27 @@ public class ExpandableRecycler extends RecyclerView {
             for (int i = 0; i < childCount; i++) {
                 childView.addView(getChildView(context, childView, i));
             }
+
+            expendableView.setExpanded(isExpand != null && isExpand);
+
+            if (isExpand == null || !isExpand)
+                expendableView.initLayout();
+
         }
 
         public abstract View getView(Context context, ViewGroup parent);
 
         public abstract View getChildView(Context context, ViewGroup parent, int childPosition);
+
+        void setToggleListener(ToggleListener listener) {
+            this.listener = listener;
+        }
+    }
+
+    public interface ToggleListener {
+        public void onExpand(int position);
+
+        public void onCollapse(int position);
     }
 
 

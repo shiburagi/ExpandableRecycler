@@ -10,7 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.app.infideap.expandablerecyclerview.ExpandableRecycler;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -63,37 +65,52 @@ public class PostFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_expandable_list, container, false);
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            Gson gson = new Gson();
-            try {
-                // Convert json to POJO
-                List<Post> posts =
-                        Arrays.asList(gson.fromJson(readFromAsset("data/post.json"), Post[].class));
+        Context context = view.getContext();
 
-                PostExpandableRecyclerViewAdapter adapter
-                        = new PostExpandableRecyclerViewAdapter(posts, mListener);
-
-//               adapter.setToggleDrawable(null); // set custom icon for toggle
-               adapter.setShowToggle(false); // hide or show toggle
-
-                // set divider color
-                adapter.setDividerColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-
-                //set divider color none
-//                adapter.setDividerColor(0);
-                recyclerView.setAdapter(adapter);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        final TextView actionTextView = view.findViewById(R.id.textView_action);
+        RecyclerView recyclerView = view.findViewById(R.id.list);
+        if (mColumnCount <= 1) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
+        Gson gson = new Gson();
+        try {
+            // Convert json to POJO
+            List<Post> posts =
+                    Arrays.asList(gson.fromJson(readFromAsset("data/post.json"), Post[].class));
+
+            PostExpandableRecyclerViewAdapter adapter
+                    = new PostExpandableRecyclerViewAdapter(posts, mListener);
+
+            // adapter.setToggleDrawable(null); // set custom icon for toggle
+            adapter.setShowToggle(false); // hide or show toggle
+
+            // set divider color
+            adapter.setDividerColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+
+            // set divider color none
+            // adapter.setDividerColor(0);
+            recyclerView.setAdapter(adapter);
+
+            // listen to expand/collapse state
+            adapter.setToggleListener(new ExpandableRecycler.ToggleListener() {
+                @Override
+                public void onExpand(int position) {
+                    actionTextView.setText("Expand at index " + position);
+                }
+
+                @Override
+                public void onCollapse(int position) {
+                    actionTextView.setText("Collapse at index " + position);
+
+                }
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return view;
     }
 

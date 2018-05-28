@@ -1,16 +1,17 @@
 apply plugin: 'com.android.library'
-
+ext{
+    PUBLISH_GROUP_ID= 'com.infideap.expendablerecycler'
+    PUBLISH_ARTIFACT_ID= 'expendable-recycler-adpater'
+    PUBLISH_VERSION= '0.0.1'
+}
 android {
-    compileSdkVersion 25
-    buildToolsVersion "24.0.1"
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 27
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
     buildTypes {
@@ -19,16 +20,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    lintOptions {
+        abortOnError false
+        checkReleaseBuilds false
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:25.0.0'
-    testCompile 'junit:junit:4.12'
-    compile 'com.github.aakira:expandable-layout:1.6.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    compile 'com.android.support:recyclerview-v7:25.0.0'
+    implementation 'com.android.support:support-v4:27.1.1'
+
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.github.aakira:expandable-layout:1.6.0'
 }
+apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/' +
+        'master/android-release-aar.gradle'

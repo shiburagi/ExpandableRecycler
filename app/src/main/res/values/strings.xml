@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ExpandableRecyclerViewExample</string>
+    <string name="action">Action</string>
 </resources>

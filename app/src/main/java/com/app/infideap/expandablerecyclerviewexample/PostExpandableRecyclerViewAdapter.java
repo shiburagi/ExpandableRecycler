@@ -40,8 +40,6 @@ public class PostExpandableRecyclerViewAdapter extends ExpandableRecycler.Adapte
         mValues = items;
         mListener = listener;
 
-
-
     }
 
     @Override
@@ -52,7 +50,10 @@ public class PostExpandableRecyclerViewAdapter extends ExpandableRecycler.Adapte
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
+        if (position == 1)
+            holder.expand();
         super.onBindViewHolder(holder, position);
+
 
     }
 
