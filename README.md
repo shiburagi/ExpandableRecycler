@@ -1,6 +1,8 @@
 # Expandable-Recycler
 [ ![Download](https://api.bintray.com/packages/infideap2/expandable-recycler/expandable-recycler/images/download.svg?version=0.0.1) ](https://bintray.com/infideap2/expandable-recycler/expandable-recycler/0.0.1/link)
 
+A library provide expand & collapse state for recyclerview.
+
 ![Alt Text](https://raw.githubusercontent.com/shiburagi/ExpandableRecyclerViewExample/master/preview.gif)
 
 ## How to use
