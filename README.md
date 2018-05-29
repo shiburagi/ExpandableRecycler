@@ -55,6 +55,16 @@ public class PostExpandableRecyclerViewAdapter extends ExpandableRecycler.Adapte
 
     }
     
+    /**
+     * 
+     * @param position
+     * @return number of child for specific position/index
+     */
+    @Override
+    public int getChildCount(int position) {
+        return mValues.get(position).comments.size();
+    }
+    
     ...
     
     
