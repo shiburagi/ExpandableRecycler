@@ -5,6 +5,12 @@ A library provide expand & collapse state for recyclerview.
 
 ![Alt Text](https://raw.githubusercontent.com/shiburagi/ExpandableRecyclerViewExample/master/preview.gif)
 
+
+---
+
+<a href='https://ko-fi.com/A0A0FB3V' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi4.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=D9JKYQL8452AL)
+
 ## How to use
 ## Including In Your Project
 If you are a Maven user you can easily include the library by specifying it as
